@@ -10,6 +10,6 @@ jobs:
         with:
           python-version: '3.9'
       - name: Build with Buildozer
-        uses: kivy/buildozer-action@v1.2.2
+        uses: ArtemGr/buildozer-action@v1
         with:
           command: buildozer android debug
