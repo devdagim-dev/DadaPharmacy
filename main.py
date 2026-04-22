@@ -1,26 +1,26 @@
 from kivy.app import App
 from kivy.uix.label import Label
-from kivy.clock import Clock
 import threading
-from flask import Flask, render_template
+from flask import Flask
 import sqlite3
 
-# --- የ Flask ክፍል ---
-app = Flask(__name__)
+# --- Flask ክፍል ---
+flask_app = Flask(__name__)
 
-@app.route('/')
+@flask_app.route('/')
 def index():
-    return "Pharmacy App is Running!" # ለጊዜው ይህን እናድርገው
+    return "Dada Pharmacy Server is Running!"
 
 def run_flask():
-    app.run(host='127.0.0.1', port=5000)
+    # ለአንድሮይድ 127.0.0.1 መጠቀም ይመከራል
+    flask_app.run(host='127.0.0.1', port=5000)
 
-# --- የ Kivy ክፍል (ለአንድሮይድ) ---
+# --- Kivy ክፍል ---
 class PharmacyApp(App):
     def build(self):
-        # Flaskን በጀርባ (Background) ያስጀምረዋል
+        # Flaskን በሌላ Thread ያስጀምረዋል
         threading.Thread(target=run_flask, daemon=True).start()
-        return Label(text="Dada Pharmacy App Loading...")
+        return Label(text="Dada Pharmacy App\nServer started on localhost:5000")
 
 if __name__ == '__main__':
     PharmacyApp().run()
