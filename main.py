@@ -1,19 +1,23 @@
-name: Build APK
-on: [push]
+from kivy.app import App
+from kivy.uix.label import Label
+import threading
+from flask import Flask
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# --- Flask ክፍል ---
+flask_app = Flask(__name__)
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+@flask_app.route('/')
+def index():
+    return "Dada Pharmacy Server is Running!"
 
-      - name: Build with Buildozer
-        uses: ArtemGr/buildozer-action@v1
-        with:
-          command: buildozer android debug
-          buildozer_version: master
+def run_flask():
+    flask_app.run(host='127.0.0.1', port=5000)
+
+# --- Kivy ክፍል ---
+class PharmacyApp(App):
+    def build(self):
+        threading.Thread(target=run_flask, daemon=True).start()
+        return Label(text="Dada Pharmacy App\nServer started on localhost:5000")
+
+if __name__ == '__main__':
+    PharmacyApp().run()
