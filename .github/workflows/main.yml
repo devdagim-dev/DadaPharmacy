@@ -7,13 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
       - name: Build with Buildozer
-        uses: ArtemGr/buildozer-action@v1
+        uses: Enteee/buildozer-action@v1.1
         with:
           command: buildozer android debug
-          buildozer_version: master
+          repository_root: .
