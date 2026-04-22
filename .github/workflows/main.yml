@@ -13,7 +13,7 @@ jobs:
           python-version: '3.11'
 
       - name: Build with Buildozer
-        uses: kivy/buildozer-action@master
+        uses: ArtemGr/buildozer-action@v1
         with:
           command: buildozer android debug
           buildozer_version: master
